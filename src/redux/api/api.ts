@@ -32,11 +32,11 @@ export const baseApi = createApi({
       }),
       invalidatesTags: ["todo"],
     }),
-    toggleTodo: builder.mutation({
-      query: (args: { id: string; isCompleted: boolean }) => ({
-        url: `/task/${args.id}`,
+    updateTodo: builder.mutation({
+      query: (options) => ({
+        url: `/task/${options.id}`,
         method: "PUT",
-        body: { isCompleted: !args.isCompleted },
+        body: options.data,
       }),
       invalidatesTags: ["todo"],
     }),
@@ -47,5 +47,5 @@ export const {
   useGetTodosQuery,
   useAddTodoMutation,
   useDeleteTodoMutation,
-  useToggleTodoMutation,
+  useUpdateTodoMutation,
 } = baseApi;

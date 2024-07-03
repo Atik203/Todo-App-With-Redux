@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { useDeleteTodoMutation } from "@/redux/api/api";
+import { useDeleteTodoMutation, useUpdateTodoMutation } from "@/redux/api/api";
 import { TTodo } from "@/redux/features/todo/todoSlice";
 import { Button } from "../ui/button";
 import EditIcon from "./../ui/EditIcon";
@@ -9,10 +9,20 @@ const TodoCard = ({ todo }: { todo: TTodo }) => {
   const { title, description, _id, isCompleted, priority } = todo;
 
   const [deleteTodo, obejct] = useDeleteTodoMutation();
-  const [toggleTodo, object] = useDeleteTodoMutation();
+  const [updateTodo, object] = useUpdateTodoMutation();
 
   const handleComplete = () => {
-    toggleTodo({ _id, isCompleted });
+    const options = {
+      id: _id,
+      data: {
+        isCompleted: !isCompleted,
+        title,
+        description,
+        priority,
+      },
+    };
+
+    updateTodo(options);
   };
 
   return (
@@ -21,6 +31,7 @@ const TodoCard = ({ todo }: { todo: TTodo }) => {
         onClick={handleComplete}
         type="checkbox"
         name="toggleTodo"
+        defaultChecked={isCompleted}
         className="toggleTodo flex justify-start items-center h-5 w-5 rounded-md"
       />
       <p className="font-semibold">{title}</p>

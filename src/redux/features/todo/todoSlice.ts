@@ -2,10 +2,11 @@ import { RootState } from "@/redux/store";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export interface TTodo {
-  id: string;
+  id?: string;
   title: string;
   description: string;
   isCompleted?: boolean;
+  priority?: "Low" | "Medium" | "High";
 }
 
 export type TInitialState = {

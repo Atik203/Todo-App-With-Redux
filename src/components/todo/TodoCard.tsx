@@ -1,15 +1,18 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useDeleteTodoMutation, useUpdateTodoMutation } from "@/redux/api/api";
 import { TTodo } from "@/redux/features/todo/todoSlice";
+import { useState } from "react";
 import { Button } from "../ui/button";
 import EditIcon from "./../ui/EditIcon";
 import TrashIcon from "./../ui/TrashIcon";
+import EditTodoModal from "./EditTodoModal";
 
 const TodoCard = ({ todo }: { todo: TTodo }) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const { title, description, _id, isCompleted, priority } = todo;
 
-  const [deleteTodo, obejct] = useDeleteTodoMutation();
-  const [updateTodo, object] = useUpdateTodoMutation();
+  const [deleteTodo] = useDeleteTodoMutation();
+  const [updateTodo] = useUpdateTodoMutation();
 
   const handleComplete = () => {
     const options = {
@@ -51,9 +54,17 @@ const TodoCard = ({ todo }: { todo: TTodo }) => {
         <p className="text-red-500 font-semibold">Pending</p>
       )}
       <div className="space-x-2">
-        <Button className="bg-purple-500">
+        <Button onClick={() => setIsModalOpen(true)} className="bg-purple-500">
           <EditIcon />
         </Button>
+        {isModalOpen && (
+          <EditTodoModal
+            todo={todo}
+            isOpen={isModalOpen}
+            onClose={() => setIsModalOpen(false)}
+          />
+        )}
+
         <Button
           onClick={() => {
             deleteTodo(_id);

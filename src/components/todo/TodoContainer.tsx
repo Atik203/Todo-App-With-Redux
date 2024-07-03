@@ -5,7 +5,7 @@ import TodoFilter from "./TodoFilter";
 const TodoContainer = () => {
   return (
     <div>
-      <div className="mx-auto my-5 text-center space-x-5">
+      <div className="mx-auto my-5 text-center space-x-16">
         <AddTodoModal />
         <TodoFilter />
       </div>

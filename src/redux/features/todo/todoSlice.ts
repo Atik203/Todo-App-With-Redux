@@ -27,11 +27,19 @@ const todoSlice = createSlice({
       state.todos = state.todos.filter((todo) => todo.id !== action.payload);
     },
     toggleTodo: (state, action: PayloadAction<string>) => {
-      state.todos = state.todos.map((todo) =>
+      // Step 1: Toggle the isCompleted status
+      const updatedTodos = state.todos.map((todo) =>
         todo.id === action.payload
           ? { ...todo, isCompleted: !todo.isCompleted }
           : todo
       );
+
+      // Step 2: Separate the todos into pending and completed
+      const pendingTodos = updatedTodos.filter((todo) => !todo.isCompleted);
+      const completedTodos = updatedTodos.filter((todo) => todo.isCompleted);
+
+      // Step 3: Concatenate pending and completed todos
+      state.todos = [...pendingTodos, ...completedTodos];
     },
   },
 });

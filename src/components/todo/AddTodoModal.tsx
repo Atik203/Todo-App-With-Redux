@@ -1,6 +1,7 @@
 import { addTodo } from "@/redux/features/todo/todoSlice";
 import { useAppDispatch } from "@/redux/hooks";
 import { FormEvent, useState } from "react";
+import { v4 as uuidv4 } from "uuid";
 import { Button } from "../ui/button";
 import {
   Dialog,
@@ -23,9 +24,12 @@ const AddTodoModal = () => {
   const onSubmit = (e: FormEvent) => {
     e.preventDefault();
 
+    const id = uuidv4();
+
     const taskData = {
+      id,
       title: task,
-      description: description,
+      description,
     };
 
     dispatch(addTodo(taskData));

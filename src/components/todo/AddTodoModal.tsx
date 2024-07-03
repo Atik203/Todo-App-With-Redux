@@ -1,3 +1,5 @@
+import { addTodo } from "@/redux/features/todo/todoSlice";
+import { useAppDispatch } from "@/redux/hooks";
 import { FormEvent, useState } from "react";
 import { Button } from "../ui/button";
 import {
@@ -16,9 +18,17 @@ const AddTodoModal = () => {
   const [task, setTask] = useState("");
   const [description, setDescription] = useState("");
 
+  const dispatch = useAppDispatch();
+
   const onSubmit = (e: FormEvent) => {
     e.preventDefault();
-    console.log({ task, description });
+
+    const taskData = {
+      title: task,
+      description: description,
+    };
+
+    dispatch(addTodo(taskData));
   };
 
   return (

@@ -1,12 +1,14 @@
+import { RootState } from "@/redux/store";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-interface TTodo {
+export interface TTodo {
+  id: string;
   title: string;
   description: string;
   isCompleted?: boolean;
 }
 
-type TInitialState = {
+export type TInitialState = {
   todos: TTodo[];
 };
 
@@ -23,6 +25,8 @@ const todoSlice = createSlice({
     },
   },
 });
+
+export const selectTodos = (state: RootState) => state.todos.todos;
 
 export const { addTodo } = todoSlice.actions;
 

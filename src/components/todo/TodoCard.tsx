@@ -5,7 +5,7 @@ import EditIcon from "./../ui/EditIcon";
 import TrashIcon from "./../ui/TrashIcon";
 
 const TodoCard = ({ todo }: { todo: TTodo }) => {
-  const { title, description, id, isCompleted } = todo;
+  const { title, description, id, isCompleted, priority } = todo;
   const dispatch = useAppDispatch();
 
   const handleComplete = () => {
@@ -13,20 +13,28 @@ const TodoCard = ({ todo }: { todo: TTodo }) => {
   };
 
   return (
-    <div className="p-8 bg-white mx-auto rounded-md flex items-center justify-center gap-5">
+    <div className="p-8 bg-white mx-auto rounded-md flex items-center justify-between gap-4">
       <input
         onClick={handleComplete}
         type="checkbox"
         name="toggleTodo"
-        className="toggleTodo"
+        className="toggleTodo flex justify-start items-center h-5 w-5 rounded-md"
       />
-      <p className="font-semibold text-xl">{title}</p>
+      <p className="font-semibold">{title}</p>
       {/* <p className="text-lg">Time</p> */}
-      <p className="text-lg">{description}</p>
+      <p className="">{description}</p>
+      <p
+        className={`${priority === "High" ? "text-red-500" : null} 
+          ${priority === "Medium" ? "text-yellow-500" : null} 
+          ${priority === "Low" ? "text-green-500" : null}
+          `}
+      >
+        {priority}
+      </p>
       {isCompleted ? (
-        <p className="text-lg text-green-500 font-semibold">Completed</p>
+        <p className="text-green-500 font-semibold">Completed</p>
       ) : (
-        <p className="text-lg text-red-500 font-semibold">Pending</p>
+        <p className="text-red-500 font-semibold">Pending</p>
       )}
       <div className="space-x-2">
         <Button className="bg-purple-500">

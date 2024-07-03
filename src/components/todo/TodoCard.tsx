@@ -1,15 +1,18 @@
-import { removeTodo, toggleTodo, TTodo } from "@/redux/features/todo/todoSlice";
-import { useAppDispatch } from "@/redux/hooks";
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import { useDeleteTodoMutation } from "@/redux/api/api";
+import { TTodo } from "@/redux/features/todo/todoSlice";
 import { Button } from "../ui/button";
 import EditIcon from "./../ui/EditIcon";
 import TrashIcon from "./../ui/TrashIcon";
 
 const TodoCard = ({ todo }: { todo: TTodo }) => {
-  const { title, description, id, isCompleted, priority } = todo;
-  const dispatch = useAppDispatch();
+  const { title, description, _id, isCompleted, priority } = todo;
+
+  const [deleteTodo, obejct] = useDeleteTodoMutation();
+  const [toggleTodo, object] = useDeleteTodoMutation();
 
   const handleComplete = () => {
-    dispatch(toggleTodo(id));
+    toggleTodo({ _id, isCompleted });
   };
 
   return (
@@ -40,7 +43,12 @@ const TodoCard = ({ todo }: { todo: TTodo }) => {
         <Button className="bg-purple-500">
           <EditIcon />
         </Button>
-        <Button onClick={() => dispatch(removeTodo(id))} className="bg-red-500">
+        <Button
+          onClick={() => {
+            deleteTodo(_id);
+          }}
+          className="bg-red-500"
+        >
           <TrashIcon />
         </Button>
       </div>
